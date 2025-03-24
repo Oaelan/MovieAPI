@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
 
@@ -14,7 +14,9 @@ function Header() {
   };
   return (
     <div className="Header mt-20 w-full flex flex-col items-center justify-center gap-5">
-      <h1 className="text-4xl font-bold">MOVIE SEARCH</h1>
+      <Link to="/" className="text-4xl font-bold cursor-pointer">
+        MOVIE SEARCH
+      </Link>
       <div className="flex gap-2 w-[50%]">
         <Input
           type="text"

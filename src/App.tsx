@@ -2,7 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 import MovieCard from "./MovieCard";
 import { Movie } from "./types/movieApiTypes";
+import { useLocation } from "react-router-dom";
 function App() {
+  const location = useLocation();
   const getRandomPage = () => {
     return Math.floor(Math.random() * 17) + 1; // 1~17 사이 랜덤 값
   };
@@ -12,7 +14,7 @@ function App() {
   // api키
   const apiKey = import.meta.env.VITE_API_KEY;
   // 기본으로 받아오는 영화 정보
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["defaultMovie"], //쿼리 식별자
     queryFn: () =>
       //api 요청 함수
@@ -29,6 +31,15 @@ function App() {
       setDefalutMovie(data.results.slice(0, 8));
     }
   }, [data]);
+
+  useEffect(() => {
+    // 경로가 "/"일 때만 refetch 실행
+    if (location.pathname === "/") {
+      // 새로운 랜덤 페이지 설정
+      defalutPage.current = getRandomPage();
+      refetch();
+    }
+  }, [location, refetch]);
 
   return (
     <div className="App m-5 grid grid-3 gap-10">
