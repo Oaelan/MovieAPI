@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import MovieCard from "./MovieCard";
 import { Movie } from "./types/movieApiTypes";
 import { useLocation } from "react-router-dom";
+import { fetchMovies } from "./api/api";
 function App() {
   const location = useLocation();
   const getRandomPage = () => {
@@ -11,17 +12,10 @@ function App() {
   const [defalutMovie, setDefalutMovie] = useState<Movie[]>([]);
   const defalutPage = useRef(getRandomPage());
 
-  // api키
-  const apiKey = import.meta.env.VITE_API_KEY;
   // 기본으로 받아오는 영화 정보
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["defaultMovie"], //쿼리 식별자
-    queryFn: () =>
-      //api 요청 함수
-      fetch(
-        //인기순으로 영화 데이터 요청
-        `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=ko-KR&vote_count.gte=10000&page=${defalutPage.current}`
-      ).then((data) => data.json()),
+    queryKey: ["defaultMovie", defalutPage.current],
+    queryFn: () => fetchMovies(defalutPage.current), // API 요청 함수 호출
   });
 
   useEffect(() => {

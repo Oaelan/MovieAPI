@@ -121,6 +121,7 @@
 
 body {
   margin: 0 150px 0 150px;
+  background-color: black;
 }
 
 #root {
@@ -129,5 +130,5 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background-color: #f5f5f5;
+  background-color: black;
 }

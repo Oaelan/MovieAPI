@@ -14,11 +14,12 @@ function Header() {
   };
   return (
     <div className="Header mt-20 w-full flex flex-col items-center justify-center gap-5">
-      <Link to="/" className="text-4xl font-bold cursor-pointer">
+      <Link to="/" className="text-white text-4xl font-bold cursor-pointer">
         MOVIE SEARCH
       </Link>
       <div className="flex gap-2 w-[50%]">
         <Input
+          className="text-white"
           type="text"
           placeholder="영화제목을 입력하세요"
           onChange={(e) => (searchInputRef.current = e.target.value)}
