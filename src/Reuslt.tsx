@@ -1,41 +1,35 @@
 import { useParams } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "./components/ui/card";
-
+import ResultCard from "./ResultCard";
+import { getSearchResult } from "./api/api";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Movie } from "./types/movieApiTypes";
 function Result() {
+  const [searchData, setSearchData] = useState<Movie[]>([]);
   // URL 파라미터에서 searchTerm 값을 가져옵니다
   const { searchTerm } = useParams<{ searchTerm: string }>();
-  console.log(searchTerm);
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["searchResult", searchTerm], //쿼리 식별자
+    queryFn: () => {
+      //searchTerm이 유효할 때만 API 요청
+      if (searchTerm) {
+        return getSearchResult(searchTerm); // searchTerm이 유효할 때만 API 요청
+      }
+    },
+  });
+  useEffect(() => {
+    console.log(data);
+    if (data && data.results) {
+      setSearchData(data.results);
+    }
+  }, [data]);
   return (
-    <div className="Result grid gap-10 w-full h-full px-40 justify-items-center">
-      <Card className="grid grid-cols-2 w-[80%]">
-        <CardHeader>
-          <CardTitle className="flex flex-col gap-3">
-            <div className="grid grid-cols-2">
-              <p>영화 이름</p>
-              <p>⭐️ 7.5</p>
-            </div>
-            <p className="text-sm">개봉일 2025-03-24</p>
-          </CardTitle>
-          <div className="w-64 h-64">
-            <img className="w-full h-full object-contain" src={""} alt="" />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <CardDescription>
-            <div>줄거리</div>
-            <div>
-              영화ㄹ홀홀홀홓ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ
-              내용
-            </div>
-          </CardDescription>
-        </CardContent>
-      </Card>
+    <div className="Result grid gap-10 w-full h-full px-20 justify-items-center">
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        searchData.map((movie) => <ResultCard movie={movie} key={movie.id} />)
+      )}
     </div>
   );
 }
