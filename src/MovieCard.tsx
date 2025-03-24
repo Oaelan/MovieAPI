@@ -16,20 +16,20 @@ function MovieCard({ movie }: OwnProps) {
     <Card>
       <CardHeader>
         <CardTitle className="!text-center">{movie.title}</CardTitle>
-        <div className="w-full h-128">
-          <img
-            className="w-full h-full object-cover"
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt={movie.title}
-          />
-        </div>
       </CardHeader>
-      <CardContent>
-        <p>{movie.vote_average}</p>
+      <div className="w-full h-64 px-7">
+        <img
+          className="w-full h-full object-contain"
+          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          alt={movie.title}
+        />
+      </div>
+      <CardContent className="text-[17px]">
+        <div className="flex justify-between w-full gap-2">
+          <p>개봉일 : {movie.release_date}</p>
+          <p>⭐️ {movie.vote_average}</p>
+        </div>
       </CardContent>
-      <CardFooter>
-        <p>{movie.vote_average}</p>
-      </CardFooter>
     </Card>
   );
 }

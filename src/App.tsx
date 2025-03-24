@@ -1,5 +1,3 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 import MovieCard from "./MovieCard";
@@ -10,6 +8,7 @@ function App() {
   };
   const [defalutMovie, setDefalutMovie] = useState<Movie[]>([]);
   const defalutPage = useRef(getRandomPage());
+
   // api키
   const apiKey = import.meta.env.VITE_API_KEY;
   // 기본으로 받아오는 영화 정보
@@ -30,15 +29,9 @@ function App() {
       setDefalutMovie(data.results.slice(0, 8));
     }
   }, [data]);
+
   return (
-    <div className="App m-50 mt-30 mb-20  grid grid-3 gap-10">
-      <div className="w-full flex flex-col gap-3 items-center justify-center gap-2">
-        <h1 className="text-4xl font-bold">MOVIE SEARCH</h1>
-        <div className="flex gap-2 w-[50%]">
-          <Input type="text" placeholder="영화제목을 입력하세요" />
-          <Button>검색</Button>
-        </div>
-      </div>
+    <div className="App m-5 grid grid-3 gap-10">
       {/* 기본 영화 데이터 */}
       <div className="grid grid-cols-4 gap-4">
         {isLoading ? (
@@ -49,8 +42,6 @@ function App() {
           ))
         )}
       </div>
-
-      <div className="text-center text-sm text-gray-500">Powered by TMDB</div>
     </div>
   );
 }
