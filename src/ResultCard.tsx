@@ -11,7 +11,7 @@ function ResultCard({ movie }: OwnProps) {
   const roundedVoteAverage = roundUpMovieScore(movie.vote_average);
 
   return (
-    <Card className="p-0 flex flex-row w-[80%] bg-gray-600 h-[150px]">
+    <Card className="p-0 flex flex-row w-[80%] bg-gray-600 h-[150px] hover:bg-gray-500 transition-all duration-300">
       <div className="">
         <div className="min-w-[94px] w-[94px] h-[148px]">
           <img
@@ -22,7 +22,7 @@ function ResultCard({ movie }: OwnProps) {
         </div>
       </div>
       <div className="w-full h-full flex flex-col justify-center p-5">
-        <div className="text-2xl font-bold">{movie.title}</div>
+        <div className="text-2xl font-bold text-gray-200">{movie.title}</div>
         <div className="text-sm text-gray-400">{movie.release_date}</div>
         <div className="text-sm text-gray-400">⭐️ {roundedVoteAverage}</div>
         <div className="text-sm text-gray-400 overflow-hidden h-[100px] line-clamp-2">
